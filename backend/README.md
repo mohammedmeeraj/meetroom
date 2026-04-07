@@ -1,7 +1,7 @@
 
 # MeetRoom - Backend API
 
-![Python](https://img.shields.io/badge/Python-3.12.4+-3776AB?style=flat-square&logo=python&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.12.4-3776AB?style=flat-square&logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.135.3-009688?style=flat-square&logo=fastapi&logoColor=white)
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0.48-D71F00?style=flat-square&logo=sqlalchemy&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
