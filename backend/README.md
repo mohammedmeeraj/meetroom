@@ -26,5 +26,6 @@ Anonymous video meeting backend. Handles host authentication, room lifecycle man
 | Framework | [FastAPI](https://fastapi.tiangolo.com) 0.135 |
 | ORM | [SQLAlchemy](https://www.sqlalchemy.org) 2.0 |
 | Database | PostgreSQL (prod) / SQLite (dev) |
+| Migrations | Alembic 1.18 |
 | Auth | JWT via [python-jose](https://github.com/mpdavis/python-jose) + bcrypt |
 | Validation | Pydantic v2 + pydantic-settings |
