@@ -30,3 +30,16 @@ Anonymous video meeting backend. Handles host authentication, room lifecycle man
 | Migrations | Alembic 1.18 |
 | Auth | JWT via [python-jose](https://github.com/mpdavis/python-jose) + bcrypt |
 | Validation | Pydantic v2 + pydantic-settings |
+
+---
+## Project Structure
+```
+backend/
+|-- app/
+|-- alembic/
+|-- alembic.ini
+|-- requirements.txt
+|-- .gitignore
+|-- .env
+|-- README.md 
+```
