@@ -36,6 +36,15 @@ Anonymous video meeting backend. Handles host authentication, room lifecycle man
 ```
 backend/
 |-- app/
+|   |-- models/
+|   |-- routers/
+|   |-- schemas/
+|   |-- core/
+|   |   |-- config.py
+|   |   |-- security.py                # JWT, hashing, etc
+|   |-- main.py                        # App factory, router registeration
+|   |-- database.py                    # SQLAlchemy engine, SessionLocal, get_db() dependency
+|   |-- dependencies.py                # get_settings() dependency
 |-- alembic/
 |-- alembic.ini
 |-- requirements.txt

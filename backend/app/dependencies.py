@@ -1,4 +1,4 @@
-from . import config
+from .core import config
 from functools import lru_cache
 
 @lru_cache
