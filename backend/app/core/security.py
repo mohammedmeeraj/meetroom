@@ -3,6 +3,7 @@ from pwdlib import PasswordHash
 from fastapi.security import OAuth2PasswordBearer
 from datetime import timedelta, datetime, timezone
 from app.dependencies import get_settings
+from typing import Optional
 
 settings = get_settings()
 
@@ -27,3 +28,9 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     )
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
+
+def decode_token(token: str) -> Optional[dict]:
+    try:
+        return jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+    except JWTError:
+        return None
