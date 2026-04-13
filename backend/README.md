@@ -52,3 +52,47 @@ backend/
 |-- .env
 |-- README.md 
 ```
+---
+## API reference
+
+All endpoints are prefixed with '/api'. Authenticated endpoints require a `Bearer` token in the `Authorization` header.
+
+### Authentication
+
+#### `POST /api/auth/register`
+
+Create a new user. Returns a JWT and the created user.
+
+**No authentication required.**
+
+**Request body**
+
+```json
+{
+    "email": "you@example.com",
+    "password": "yourpassword"
+}
+```
+
+**Response `201`**
+
+```json
+{
+    "access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwiZXhwIjoxNzc....",
+    "token_type":"bearer",
+    "user":{
+        "id": 1,
+        "email":"you@example.com",
+        "is_active": true,
+        "created_at": "2026-04-13T11:25:19"
+    }
+}
+```
+
+**Errors**
+
+| Status | Detail |
+|---|---|
+| `400` | An account with this email already exists |
+
+---
