@@ -1,15 +1,16 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from app.schemas.auth import UserCreate, Token, UserOut, UserLogin
+from app.schemas.auth import UserCreate, Token, UserOut
 from app.database import get_db
 from sqlalchemy.orm import Session
 from typing import Annotated
 from app.models.user import User
-from app.core.security import hash_password, create_access_token, authenticate_user
+from app.core.security import hash_password, create_access_token, authenticate_user, get_current_active_user
+from fastapi.security import OAuth2PasswordRequestForm
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 @router.post("/register", response_model=Token, status_code=status.HTTP_201_CREATED)
-async def register(payload: UserCreate, db: Annotated[Session, Depends(get_db)]):
+def register(payload: UserCreate, db: Annotated[Session, Depends(get_db)]):
     """Register new user"""
     existing = db.query(User).filter(User.email == payload.email).first()
 
@@ -32,9 +33,12 @@ async def register(payload: UserCreate, db: Annotated[Session, Depends(get_db)])
     return Token(access_token=token, user=UserOut.model_validate(user))
 
 @router.post("/login", response_model=Token)
-def login(payload: UserLogin, db: Annotated[Session, Depends(get_db)]):
+def login(payload: Annotated[OAuth2PasswordRequestForm, Depends()], db: Annotated[Session, Depends(get_db)]):
     """Authenticate user and return jwt"""
-    user = authenticate_user(db=db, email=payload.email, password=payload.password)
+
+    # OAuth2PasswordRequestForm uses "username" by convention.
+    # We map it to email since our system authenticates using email.
+    user = authenticate_user(db=db, email=payload.username, password=payload.password)
 
     if not user:
         raise HTTPException(
@@ -50,3 +54,8 @@ def login(payload: UserLogin, db: Annotated[Session, Depends(get_db)]):
     token = create_access_token({"sub": str(user.id)})
     return Token(access_token=token, user=UserOut.model_validate(user))
 
+@router.get("/me", response_model=UserOut)
+def me(current_user: Annotated[User, Depends(get_current_active_user)]):
+    """Return the currently authenticated user."""
+    return current_user
+    
