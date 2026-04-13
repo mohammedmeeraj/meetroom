@@ -13,7 +13,7 @@ class UserOut(BaseModel):
     id: int
     email: str
     is_active: bool
-    crated_at: datetime
+    created_at: datetime
 
     class Config:
         from_attributes = True
