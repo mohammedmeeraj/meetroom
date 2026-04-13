@@ -1,12 +1,12 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
-    app_name: str 
-    database_url: str = "sqlite:///./meetroom.db"
+    APP_NAME: str 
+    DATABSE_URL: str = "sqlite:///./meetroom.db"
 
-    secret_key: str
-    algorithm: str
-    access_token_expire_minutes: int = 1000
+    SECRET_KEY: str
+    ALGORITHM: str
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 10080
 
     model_config = SettingsConfigDict(env_file=".env")
      

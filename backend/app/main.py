@@ -11,7 +11,7 @@ app = FastAPI(
 
 @app.get("/")
 async def root(settings: Annotated[BaseSettings, Depends(get_settings)]):
-    return {"status":"ok", "app":settings.app_name}
+    return {"status":"ok", "app":settings.APP_NAME}
 
 @app.get("/health")
 async def health():
