@@ -96,3 +96,47 @@ Create a new user. Returns a JWT and the created user.
 | `400` | An account with this email already exists |
 
 ---
+
+#### `POST /api/auth/login`
+
+Authenticates an existing host. Returns a JWT
+
+**No authentication required.**
+
+**Request body**
+
+```json
+{
+    "email": "you@example.com",
+    "password": "yourpassword"
+}
+```
+
+**Response `200`** - same response as `/register`
+
+**Errors**
+
+| Status | Detail |
+|---|---|
+| `401` | Incorrect email or password |
+| `403` | Account is disabled |
+
+---
+
+#### `GET /api/auth/me`
+
+Return the currently authenticated host.
+
+**Requires authentication.**
+
+**Response `200`**
+
+```json
+{
+    "id": 1,
+    "email": "you@example.com",
+    "is_active": true,
+    "created_at": "2026-04-13T07:14:34"
+}
+```
+---
