@@ -7,7 +7,7 @@
 ![Alembic](https://img.shields.io/badge/Alembic-1.18-orange?style=flat-square&logo=alembic&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
 
-Anonymous video meeting backend. Handles host authentication, room lifecycle management, and LiveKit token issuance for guests. Built with FastAPI + SQLAlchemy.
+MeetRoom backend. Handles host authentication, room lifecycle management, and LiveKit token issuance for guests. Built with FastAPI + SQLAlchemy.
 
 ---
 ## Table of contents
