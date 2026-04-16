@@ -25,3 +25,19 @@ def create_room(
     db.commit()
     db.refresh(room)
     return room
+
+@router.get("", response_model=list[RoomOut])
+def list_rooms(
+    db: Annotated[Session, Depends(get_db)],
+    current_active_user: Annotated[User, Depends(get_current_active_user)]  
+):
+    """List all rooms created by the authenticated host, newest first."""
+    return (
+        db.query(Room)
+        .filter(Room.host_id == current_active_user.id)
+        .order_by(Room.created_at.desc())
+        .all()
+    )
+
+
+    
