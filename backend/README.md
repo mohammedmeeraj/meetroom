@@ -37,10 +37,16 @@ MeetRoom backend. Handles host authentication, room lifecycle management, and Li
 backend/
 |-- app/
 |   |-- models/
+|   |   |-- user.py                    # users table
+|   |   |-- room.py                    # rooms table + slug generator
 |   |-- routers/
+|   |   |-- auth.py                    # POST /register  POST /login  GET /me
+|   |   |-- rooms.py                   # CRUD for rooms + participant count
 |   |-- schemas/
+|   |   |-- auth.py                    # Pydantic models for auth endpoints
+|   |   |-- room.py                    # Pydantic models for room
 |   |-- core/
-|   |   |-- config.py
+|   |   |-- config.py                  # Settings loaded from .env via pydantic
 |   |   |-- security.py                # JWT, hashing, etc
 |   |-- main.py                        # App factory, router registeration
 |   |-- database.py                    # SQLAlchemy engine, SessionLocal, get_db() dependency
@@ -53,6 +59,47 @@ backend/
 |-- README.md 
 ```
 ---
+
+## Local development
+
+### Prerequisites
+
+- Python 3.10+
+- A [LiveKit Cloud](https://cloud.livekit.io) account (free tier) - or self-hosted LiveKit server
+
+### Setup
+
+```bash
+# 1. Clone and enter the directory
+cd backend
+
+# 2. Create and activate virtual environment
+python -m venv venv
+venv\Scripts\activate             #macOS / Linux: source venv/bin/activate
+
+# 3. Install dependencies
+pip install -r requirements.txt
+
+# 4. Run alembic migrations
+alembic upgrade head
+
+# 5. Create your .env file and set the environment variables
+
+# 6. Start the development server
+uvicorn app.main:app --reload
+```
+
+The API is now running at **http://localhost:8000**
+
+Interactive Swagger docs: **http://localhost:8000/docs**
+
+ReDoc: **http://localhost:8000/redoc**
+
+> SQLite is used by default in development - no database setup needed. The file 'meetroom.db' is created automatically on when you run alembic migrations.
+
+---
+
+
 ## API reference
 
 All endpoints are prefixed with '/api'. Authenticated endpoints require a `Bearer` token in the `Authorization` header.
