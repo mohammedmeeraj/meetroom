@@ -81,10 +81,10 @@ venv\Scripts\activate             #macOS / Linux: source venv/bin/activate
 # 3. Install dependencies
 pip install -r requirements.txt
 
-# 4. Run alembic migrations
-alembic upgrade head
+# 4. Create your .env file and set the environment variables
 
-# 5. Create your .env file and set the environment variables
+# 5. Run alembic migrations
+alembic upgrade head
 
 # 6. Start the development server
 uvicorn app.main:app --reload
