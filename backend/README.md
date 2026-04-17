@@ -95,9 +95,35 @@ Interactive Swagger docs: **http://localhost:8000/docs**
 
 ReDoc: **http://localhost:8000/redoc**
 
-> SQLite is used by default in development - no database setup needed. The file 'meetroom.db' is created automatically on when you run alembic migrations.
+> SQLite is used by default in development - no database setup needed. The file 'meetroom.db' is created automatically when you run alembic migrations.
 
 ---
+
+## Environment variables
+
+
+| Variable | Required | Default | Description |
+|---|---|---|---|
+| `DATABASE_URL` | yes | `sqlite:///./meetroom.db` | SQLAlchemy connection string or PostgreSQL connection string|
+| `SECRET_KEY` | yes | — | JWT signing key. Generate with `openssl rand -hex 32` |
+| `ALGORITHM` | no | `HS256` | JWT algorithm |
+| `ACCESS_TOKEN_EXPIRE_MINUTES` | no | `10080` | Token TTL (default: 7 days) |
+| `LIVEKIT_API_KEY` | yes | — | From your LiveKit project settings |
+| `LIVEKIT_API_SECRET` | yes | — | From your LiveKit project settings |
+| `LIVEKIT_URL` | yes | — | WebSocket URL, e.g. `wss://your-project.livekit.cloud` |
+| `FRONTEND_URL` | yes | `http://localhost:5173` | Allowed CORS origin |
+| `APP_NAME` | no | `MeetRoom` | Application name shown in docs |
+
+### Example `.env`
+
+```env
+DATABASE_URL=postgresql://username:password@host:port/database_name
+SECRET_KEY=your-generated-64-char-hex-secret
+LIVEKIT_API_KEY=APIxxxxxxxxxxxxxxxx
+LIVEKIT_API_SECRET=your_livekit_secret
+LIVEKIT_URL=wss://your-project.livekit.cloud
+FRONTEND_URL=https://your-frontend-url.com
+```
 
 
 ## API reference
