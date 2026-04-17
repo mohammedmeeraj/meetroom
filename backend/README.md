@@ -18,6 +18,7 @@ MeetRoom backend. Handles host authentication, room lifecycle management, and Li
 - [API reference](#api-reference)
     - [Authentication](#authentication)
     - [Rooms](#rooms)
+- [Authentication model](#authentication-model)
   
 
 ---
@@ -118,7 +119,7 @@ ReDoc: **http://localhost:8000/redoc**
 
 ```env
 DATABASE_URL=postgresql://username:password@host:port/database_name
-SECRET_KEY=your-generated-64-char-hex-secret
+SECRET_KEY=your-generated-secret-key
 LIVEKIT_API_KEY=APIxxxxxxxxxxxxxxxx
 LIVEKIT_API_SECRET=your_livekit_secret
 LIVEKIT_URL=wss://your-project.livekit.cloud
@@ -213,3 +214,17 @@ Return the currently authenticated host.
 }
 ```
 ---
+
+## Authentication model
+
+Hosts authenticate with email and password. Guests do not authenticate at all.
+
+**JWT flow**
+
+1. Host calls `POST /api/auth/login` with credentials
+2. Server returns a signed JWT (`HS256`, default TTL 7 days)
+3. Frontend stores the token and attaches it to every subsequent request:
+   ```
+   Authorization: Bearer <token>
+   ```
+4. `get_current_user()` FastAPI dependency decodes and validates the token on every protected route
