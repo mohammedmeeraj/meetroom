@@ -102,3 +102,31 @@ async def end_room(
     asyncio.create_task(_delete_livekit_room(slug))
 
     return room
+
+@router.get("/{slug}/participants")
+async def get_participants(slug: str, db: Annotated[Session, Depends(get_db)]):
+    """
+    Return the live participant count for a room from LiveKit.
+    Public endpoint — used by the dashboard to show live guest counts.
+    """
+    room = db.query(Room).filter(Room.slug == slug).first()
+    if not room or not room.is_active:
+        return {"count": 0, "participants": []}
+
+    if not settings.LIVEKIT_API_KEY or not settings.LIVEKIT_API_SECRET:
+        return {"count": 0, "participants": []}
+
+    try:
+        lkapi = livekit_api.LiveKitAPI(
+            settings.LIVEKIT_URL,
+            settings.LIVEKIT_API_KEY,
+            settings.LIVEKIT_API_SECRET,
+        )
+        resp = await lkapi.room.list_participants(
+            livekit_api.ListParticipantsRequest(room=slug)
+        )
+        await lkapi.aclose()
+        names = [p.name or p.identity.split("#")[0] for p in resp.participants]
+        return {"count": len(names), "participants": names}
+    except Exception:
+        return {"count": 0, "participants": []}
