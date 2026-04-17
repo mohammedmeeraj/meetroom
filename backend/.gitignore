@@ -2,7 +2,7 @@ venv/
 .env
 app/__pycache__
 *.pyc
-app/meetroom.db
+meetroom.db
 alembic/__pycache__
 alembic/README
 alembic/versions/__pycache__
