@@ -215,6 +215,99 @@ Return the currently authenticated host.
 ```
 ---
 
+### Rooms
+
+#### `POST /api/rooms`
+
+Create a new meeting room. Generates a unique slug used as the shareable room ID.
+
+**Requires authentication.**
+
+**Request body**
+
+```json
+{
+  "name": "Design Review"
+}
+```
+**Response `201`**
+
+```json
+{
+  "id": 1,
+  "slug": "drv-8f2a",
+  "name": "Design Review",
+  "is_active": true,
+  "host_id": 1,
+  "created_at": "2026-04-16T15:56:48",
+  "ended_at": null
+}
+```
+
+---
+
+#### `GET /api/rooms`
+
+List all rooms created by the authenticated host, newest first.
+
+**Requires authentication.**
+
+**Response `200`** — array of room objects (same shape as above)
+
+---
+
+#### `GET /api/rooms/{slug}`
+ 
+Get a single room by slug. Used by the guest join page to verify the room exists before asking for a username.
+ 
+**No authentication required.**
+ 
+**Response `200`** — room object
+ 
+**Errors**
+ 
+| Status | Detail |
+|---|---|
+| `404` | Room not found |
+
+---
+
+#### `PATCH /api/rooms/{slug}/end`
+ 
+Mark a room as ended and immediately kick all connected participants from LiveKit. Only the room's host can call this.
+ 
+**Requires authentication.**
+ 
+**Response `200`** — updated room object with `is_active: false` and `ended_at` set
+ 
+**Errors**
+ 
+| Status | Detail |
+|---|---|
+| `403` | Only the host can end this room |
+| `404` | Room not found |
+ 
+---
+
+#### `GET /api/rooms/{slug}/participants`
+ 
+Return the current live participant count for a room, fetched directly from LiveKit.
+ 
+**No authentication required.**
+ 
+**Response `200`**
+ 
+```json
+{
+  "count": 4,
+  "participants": ["Alex", "Jordan", "Sam", "Morgan"]
+}
+```
+ 
+> Returns `{ "count": 0, "participants": [] }` if the room is inactive or LiveKit is unreachable — never errors. Safe to poll on a timer.
+ 
+---
+
 ## Authentication model
 
 Hosts authenticate with email and password. Guests do not authenticate at all.
@@ -227,4 +320,4 @@ Hosts authenticate with email and password. Guests do not authenticate at all.
    ```
    Authorization: Bearer <token>
    ```
-4. `get_current_user()` FastAPI dependency decodes and validates the token on every protected route
+4. `get_current_active_user()` FastAPI dependency decodes and validates the token on every protected route
