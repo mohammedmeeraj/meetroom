@@ -23,7 +23,8 @@ MeetRoom backend. Handles host authentication, room lifecycle management, and Li
   
 ---
 
-##Features
+## Features
+
 ### Host authentication
 
 - Register and sign in with email and password
