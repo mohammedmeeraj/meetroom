@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     APP_NAME: str = "MeetRoom"
-    DATABASE_URL: str = "sqlite:///./meetroom.db"
+    DATABASE_URL: str = "sqlite:///./data/meetroom.db"
 
     SECRET_KEY: str
     ALGORITHM: str = "HS256"
@@ -14,5 +14,5 @@ class Settings(BaseSettings):
 
     FRONTEND_URL: str = "http://localhost:5173"
 
-    model_config = SettingsConfigDict(env_file=".env")
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
      
