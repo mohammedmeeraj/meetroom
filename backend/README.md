@@ -11,6 +11,7 @@ MeetRoom backend. Handles host authentication, room lifecycle management, and Li
 
 ---
 ## Table of contents
+- [Features](#features)
 - [Stack](#stack)
 - [Project structure](#project-structure)
 - [Local development](#local-development)
@@ -20,6 +21,32 @@ MeetRoom backend. Handles host authentication, room lifecycle management, and Li
     - [Rooms](#rooms)
 - [Authentication model](#authentication-model)
   
+---
+
+## Features
+
+### Host authentication
+
+- Register and sign in with email and password
+- Passwords hashed with Argon2 - plaintext never stored
+- JWT-based sessions with configurable expiry (default 7 days)
+- Protected routes via a `get_current_active_user()` FastAPI dependency
+
+### Room management
+
+- Hosts can create named meeting room - each generate a unique short slug (e.g. `drv-8f2a`)
+- Shareable guest link derived from slug: `/m/{slug}`
+- Rooms list per host, ordered newest first
+- Public room lookup by slug - used by the guest join page to verify a room exists before asking for a display name
+- Rooms have two states: **active** and **ended**
+- Host can end a room via `PATCH /room/{slug}/end` - marks it inactive in the db and simultaneously kicks all connected participants
+
+### Live participant counts
+ 
+- `GET /rooms/{slug}/participants` queries LiveKit's server API in real time
+- Returns participant count and display names for the dashboard
+- Fails gracefully — returns `{ count: 0 }` if LiveKit is unreachable, never errors
+- Safe to poll on a short interval
 
 ---
 ## Stack
@@ -81,10 +108,10 @@ venv\Scripts\activate             #macOS / Linux: source venv/bin/activate
 # 3. Install dependencies
 pip install -r requirements.txt
 
-# 4. Run alembic migrations
-alembic upgrade head
+# 4. Create your .env file and set the environment variables
 
-# 5. Create your .env file and set the environment variables
+# 5. Run alembic migrations
+alembic upgrade head
 
 # 6. Start the development server
 uvicorn app.main:app --reload
