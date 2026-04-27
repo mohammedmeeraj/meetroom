@@ -4,21 +4,27 @@ services:
     container_name: meetroom
     ports:
       - "8000:8000"                 # Host 8000 -> container 8000
-    environment:
-      - DATABASE_URL=${DATABASE_URL}
-      - LIVEKIT_API_KEY=${LIVEKIT_API_KEY}
-      - LIVEKIT_API_SECRET=${LIVEKIT_API_SECRET}
-      - FRONTEND_URL=${FRONTEND_URL}
-      - SECRET_KEY=${SECRET_KEY}
+    env_file:
+      - .env
     volumes:
-      - sqlite_store:/app/data
+      - type: volume
+        source: sqlite-store
+        target: /app/data
+    networks:
+      - meetroom-net
     develop:
       watch:
       - action: sync+restart
-        path: .
-        target: /app
+        path: ./app
+        target: /app/app
+        ignore:
+          - __pycache__/
+          - *.pyc
       - action: rebuild
         path: requirements.txt
     
 volumes:
-  sqlite_store: 
+  sqlite-store: 
+
+networks:
+  meetroom-net:
