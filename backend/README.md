@@ -15,6 +15,8 @@ MeetRoom backend. Handles host authentication, room lifecycle management, and Li
 - [Stack](#stack)
 - [Project structure](#project-structure)
 - [Local development](#local-development)
+    - [Setup - Option A: Local (Python)](#setup--option-a-local-python)
+    - [Setup - Option B: Docker Compose](#setup--option-b-docker-compose)
 - [Environment variables](#environment-variables)
 - [API reference](#api-reference)
     - [Authentication](#authentication)
@@ -95,7 +97,9 @@ backend/
 - Python 3.10+
 - A [LiveKit Cloud](https://cloud.livekit.io) account (free tier) - or self-hosted LiveKit server
 
-### Setup
+### Setup - Option A: Local (Python)
+
+Best for: Running without Docker.
 
 ```bash
 # 1. Clone and enter the directory
@@ -127,12 +131,56 @@ ReDoc: **http://localhost:8000/redoc**
 
 ---
 
+### Setup - Option B: Docker Compose
+
+Best for: Setting everything up with one command.
+
+### Prerequisites
+
+- [Docker Desktop] (https://www.docker.com/products/docker-desktop/) (includes compose)
+
+### Steps
+
+**1. Configure your environment**
+
+Create and edit the .env file
+
+**2. Run docker compose command to run migrations, build image, mount volume, start service, enable hot reload etc..**
+
+```bash
+docker compose up --watch
+
+```
+This starts meetroom-api service
+| Service | Port | Description |
+|---|---|---|
+| `meetroom-api` | `8000` | FastAPI + Uvicorn with hot-reload |
+
+**3. Verify it's working**
+
+```bash
+curl http://localhost:8000/health
+
+```
+
+**4. Stop everything**
+
+```bash
+docker compose down
+```
+To also delete the database volume:
+
+```bash
+docker compose down -v
+```
+
+
 ## Environment variables
 
 
 | Variable | Required | Default | Description |
 |---|---|---|---|
-| `DATABASE_URL` | yes | `sqlite:///./meetroom.db` | SQLAlchemy connection string or PostgreSQL connection string|
+| `DATABASE_URL` | yes | `sqlite:///./data/meetroom.db` | SQLAlchemy connection string or PostgreSQL connection string|
 | `SECRET_KEY` | yes | — | JWT signing key. Generate with `openssl rand -hex 32` |
 | `ALGORITHM` | no | `HS256` | JWT algorithm |
 | `ACCESS_TOKEN_EXPIRE_MINUTES` | no | `10080` | Token TTL (default: 7 days) |
@@ -145,7 +193,7 @@ ReDoc: **http://localhost:8000/redoc**
 ### Example `.env`
 
 ```env
-DATABASE_URL=postgresql://username:password@host:port/database_name
+DATABASE_URL=sqlite:///./data/meetroom.db or postgres url (postgresql://username:password@host:port/database_name)
 SECRET_KEY=your-generated-secret-key
 LIVEKIT_API_KEY=APIxxxxxxxxxxxxxxxx
 LIVEKIT_API_SECRET=your_livekit_secret
