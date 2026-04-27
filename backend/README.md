@@ -15,8 +15,8 @@ MeetRoom backend. Handles host authentication, room lifecycle management, and Li
 - [Stack](#stack)
 - [Project structure](#project-structure)
 - [Local development](#local-development)
-    - [Setup - Option A: Local (Python)](#setup-option-a-local-python)
-    - [Setup - Option B: Docker Compose](#setup-option-b-docker-compose)
+    - [Setup – Option A: Local (Python)](#setup--option-a-local-python)
+    - [Setup – Option B: Docker Compose](#setup--option-b-docker-compose)
 - [Environment variables](#environment-variables)
 - [API reference](#api-reference)
     - [Authentication](#authentication)
@@ -97,7 +97,7 @@ backend/
 - Python 3.10+
 - A [LiveKit Cloud](https://cloud.livekit.io) account (free tier) - or self-hosted LiveKit server
 
-### Setup - Option A: Local (Python)
+### Setup – Option A: Local (Python)
 
 Best for: Running without Docker.
 
@@ -131,7 +131,7 @@ ReDoc: **http://localhost:8000/redoc**
 
 ---
 
-### Setup - Option B: Docker Compose
+### Setup – Option B: Docker Compose
 
 Best for: Setting everything up with one command.
 
