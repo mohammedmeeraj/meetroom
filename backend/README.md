@@ -15,8 +15,8 @@ MeetRoom backend. Handles host authentication, room lifecycle management, and Li
 - [Stack](#stack)
 - [Project structure](#project-structure)
 - [Local development](#local-development)
-    - [Setup - Option A: Local (Python)](#setup--option-a-local-python)
-    - [Setup - Option B: Docker Compose](#setup--option-b-docker-compose)
+    - [Setup - Option A: Local (Python)](#setup-option-a-local-python)
+    - [Setup - Option B: Docker Compose](#setup-option-b-docker-compose)
 - [Environment variables](#environment-variables)
 - [API reference](#api-reference)
     - [Authentication](#authentication)
@@ -137,7 +137,7 @@ Best for: Setting everything up with one command.
 
 ### Prerequisites
 
-- [Docker Desktop] (https://www.docker.com/products/docker-desktop/) (includes compose)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (includes compose)
 
 ### Steps
 
@@ -168,7 +168,7 @@ curl http://localhost:8000/health
 ```bash
 docker compose down
 ```
-To also delete the database volume:
+To also delete the database volume run:
 
 ```bash
 docker compose down -v
