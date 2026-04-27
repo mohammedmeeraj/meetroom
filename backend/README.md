@@ -148,7 +148,7 @@ Create and edit the .env file
 **2. Run docker compose command to run migrations, build image, mount volume, start service, enable hot reload etc..**
 
 ```bash
-docker compose up --watch
+docker compose up --build --watch
 
 ```
 This starts meetroom-api service
