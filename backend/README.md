@@ -144,11 +144,18 @@ Best for: Setting everything up with one command.
 
 ### Steps
 
-**1. Configure your environment**
+**1. Clone and enter the repo**
+```bash
+cd backend
+
+```
+
+
+**2. Configure your environment**
 
 Create and edit the .env file
 
-**2. Run docker compose command to run migrations, build image, mount volume, start service, enable hot reload etc..**
+**3. Run docker compose command to run migrations, build image, mount volume, start service, enable hot reload etc..**
 
 ```bash
 docker compose up --build --watch
@@ -159,14 +166,14 @@ This starts meetroom-api service
 |---|---|---|
 | `meetroom-api` | `8000` | FastAPI + Uvicorn with hot-reload |
 
-**3. Verify it's working**
+**4. Verify it's working**
 
 ```bash
 curl http://localhost:8000/health
 
 ```
 
-**4. Stop everything**
+**5. Stop everything**
 
 ```bash
 docker compose down
