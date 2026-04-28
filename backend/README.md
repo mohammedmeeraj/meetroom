@@ -106,7 +106,8 @@ Best for: Running without Docker.
 
 ```bash
 # 1. Clone and enter the directory
-cd backend
+git clone https://github.com/mohammedmeeraj/meetroom.git
+cd meetroom/backend/
 
 # 2. Create and activate virtual environment
 python -m venv venv
@@ -144,9 +145,10 @@ Best for: Setting everything up with one command.
 
 ### Steps
 
-**1. Clone and enter the repo**
+**1. Clone and enter the directory**
 ```bash
-cd backend
+git clone https://github.com/mohammedmeeraj/meetroom.git
+cd meetroom/backend/
 
 ```
 
