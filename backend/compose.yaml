@@ -14,12 +14,12 @@ services:
       - meetroom-net
     develop:
       watch:
-      - action: sync+restart
+      - action: sync
         path: ./app
         target: /app/app
         ignore:
-          - __pycache__/
-          - *.pyc
+          - "__pycache__/"
+          - "*.pyc"
       - action: rebuild
         path: requirements.txt
     
