@@ -83,6 +83,9 @@ backend/
 |   |-- dependencies.py                # get_settings() dependency
 |-- alembic/
 |-- alembic.ini
+|-- compose.yaml
+|-- Dockerfile
+|-- .dockerignore
 |-- requirements.txt
 |-- .gitignore
 |-- .env
